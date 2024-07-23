@@ -11,50 +11,57 @@ pin: true
 media_subpath: '/posts/20180809'
 ---
 
-## Prerequisites
+## Creating a site repository
 
-Follow the instructions in the [Jekyll Docs](https://jekyllrb.com/docs/installation/) to complete the installation of the basic environment. [Git](https://git-scm.com/) also needs to be installed.
+There are two ways to create a site repository for **Chirpy**:
 
-## Installation
+- [**Using the Starter**](#option-1-using-the-starter) — This method makes upgrades easy and isolates irrelevant project files, allowing you to focus on writing.
+- [**Forking the Theme**](#option-2-forking-the-theme) — This method is convenient for custom development but challenging to upgrade. Unless you are familiar with Jekyll and plan to tweak or contribute to this project, this approach is not recommended.
 
-### Creating a New Site
+### Option 1: using the starter
 
-There are two ways to create a new repository for this theme:
+1. Sign in to GitHub and navigate to the [**Starter**][starter].
+2. Click the <kbd>Use this template</kbd> button and then select <kbd>Create a new repository</kbd>.
+3. Name the new repository `<GITHUB_USERNAME>.github.io`.
 
-- [**Using the Chirpy Starter**](#option-1-using-the-chirpy-starter) — Easy to upgrade, isolates irrelevant project files so you can focus on writing.
-- [**GitHub Fork**](#option-2-github-fork) — Convenient for custom development, but difficult to upgrade. Unless you are familiar with Jekyll and are determined to tweak or contribute to this project, this approach is not recommended.
+### Option 2: forking the theme
 
-#### Option 1. Using the Chirpy Starter
+1. Sign in to GitHub and [fork the Theme](https://github.com/cotes2020/jekyll-theme-chirpy/fork).
+2. Rename the new repository to `<GITHUB_USERNAME>.github.io`.
 
-Sign in to GitHub and browse to [**Chirpy Starter**][starter], click the button <kbd>Use this template</kbd> > <kbd>Create a new repository</kbd>, and name the new repository `USERNAME.github.io`, where `USERNAME` represents your GitHub username.
+## Setting up the environment
 
-#### Option 2. GitHub Fork
+The easiest way to set up the runtime environment, especially on Windows, is by using [Dev Containers](#setting-up-in-dev-containers). This method installs all packages within a Docker container, isolating them from the host machine and ensuring no interference with existing settings.
 
-Sign in to GitHub to [fork **Chirpy**](https://github.com/cotes2020/jekyll-theme-chirpy/fork), and then rename it to `USERNAME.github.io` (`USERNAME` means your username).
+For Unix-like systems, besides using Dev Containers, you can also [natively set up](#setting-up-natively) the runtime environment to achieve optimal performance.
 
-Next, clone the repository to your local machine, make sure it has [Node.js][nodejs] installed, then go to the root directory of the repo and run the following command:
+### Setting up in Dev Containers
+
+1. Install Docker:
+   - On Windows/macOS, install [Docker Desktop][docker-desktop].
+   - On Linux, install [Docker Engine][docker-engine].
+2. Install [VS Code][vscode] and the [Dev Containers extension][dev-containers].
+3. Clone your repository:
+   - For Docker Desktop: Start VS Code and [clone your repo in a container volume][dc-clone-in-vol].
+   - For Docker Engine: Clone your repo to the local disk, then launch VS Code and [open your repo in the container][dc-open-in-container].
+4. Wait a few minutes for Dev Containers to finish installing.
+
+### Setting up natively
+
+1. Follow the instructions in the [Jekyll Docs](https://jekyllrb.com/docs/installation/) to complete the installation of the basic environment. Ensure that [Git](https://git-scm.com/) is also installed.
+2. Clone your repository to a local disk.
+3. If your site was created by forking the main repository, install [Node.js][nodejs] and run `bash tools/init.sh` in the repo root directory to initialize files.
+4. Install the dependencies by running `bundle`.
+
+### Start the local server
+
+To run the site locally, use the following command:
 
 ```console
-$ bash tools/init.sh
+$ bundle exec jekyll s
 ```
 
-> If you don't want to deploy your site on GitHub Pages, append option `--no-gh` at the end of the above command.
-{: .prompt-info }
-
-The above command will:
-
-1. Check out the code to the [latest tag][latest-tag] (to ensure the stability of your site: as the code for the default branch is under development).
-2. Remove non-essential sample files and take care of GitHub-related files.
-3. Build CSS/JS assets files and then make them tracked by Git.
-4. Automatically create a new commit to save the changes above.
-
-### Installing Dependencies
-
-Before running local server for the first time, go to the root directory of your site and run:
-
-```console
-$ bundle
-```
+After a few seconds, the local server will be available at <http://127.0.0.1:4000>.
 
 ## Usage
 
@@ -67,31 +74,21 @@ Update the variables in `_config.yml`{: .filepath} as needed. Some typical optio
 - `timezone`
 - `lang`
 
-### Social Contact Options
+### Social contact options
 
 Social contact options are displayed at the bottom of the sidebar. You can enable or disable specific contacts in the `_data/contact.yml`{: .filepath} file.
 
-### Customizing the Stylesheet
+### Customizing the stylesheet
 
 To customize the stylesheet, copy the theme's `assets/css/jekyll-theme-chirpy.scss`{: .filepath} file to the same path in your Jekyll site, and add your custom styles at the end of the file.
 
 Starting with version `6.2.0`, if you want to overwrite the SASS variables defined in `_sass/addon/variables.scss`{: .filepath}, copy the main SASS file `_sass/main.scss`{: .filepath} to the `_sass`{: .filepath} directory in your site's source, then create a new file `_sass/variables-hook.scss`{: .filepath} and assign your new values there.
 
-### Customizing Static Assets
+### Customizing static assets
 
-Static assets configuration was introduced in version `5.1.0`. The CDN of the static assets is defined in `_data/origin/cors.yml`{: .filepath }. You can replace some of them based on to the network conditions in the region where your website is published.
+Static assets configuration was introduced in version `5.1.0`. The CDN of the static assets is defined in `_data/origin/cors.yml`{: .filepath }. You can replace some of them based on the network conditions in the region where your website is published.
 
-Also, if you'd like to self-host the static assets, please refer to the [_chirpy-static-assets_](https://github.com/cotes2020/chirpy-static-assets#readme).
-
-### Running Local Server
-
-You may want to preview the site contents before publishing, so just run it by:
-
-```console
-$ bundle exec jekyll s
-```
-
-After a few seconds, the local service will be published at _<http://127.0.0.1:4000>_.
+If you prefer to self-host the static assets, refer to the [_chirpy-static-assets_](https://github.com/cotes2020/chirpy-static-assets#readme) repository.
 
 ## Deployment
 
@@ -99,7 +96,7 @@ Before deploying, check the `_config.yml`{: .filepath} file and ensure the `url`
 
 Now you can choose _ONE_ of the following methods to deploy your Jekyll site.
 
-### Deploy Using GitHub Actions
+### Deploy using GitHub Actions
 
 Prepare the following:
 
@@ -120,7 +117,7 @@ Next, configure the _Pages_ service:
 
 You can now visit the URL provided by GitHub to access your site.
 
-### Manual Build and Deployment
+### Manual build and deployment
 
 For self-hosted servers, you will need to build the site on your local machine and then upload the site files to the server.
 
@@ -135,4 +132,9 @@ Unless you specified the output path, the generated site files will be placed in
 [nodejs]: https://nodejs.org/
 [starter]: https://github.com/cotes2020/chirpy-starter
 [pages-workflow-src]: https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#publishing-with-a-custom-github-actions-workflow
-[latest-tag]: https://github.com/cotes2020/jekyll-theme-chirpy/tags
+[docker-desktop]: https://www.docker.com/products/docker-desktop/
+[docker-engine]: https://docs.docker.com/engine/install/
+[vscode]: https://code.visualstudio.com/
+[dev-containers]: https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers
+[dc-clone-in-vol]: https://code.visualstudio.com/docs/devcontainers/containers#_quick-start-open-a-git-repository-or-github-pr-in-an-isolated-container-volume
+[dc-open-in-container]: https://code.visualstudio.com/docs/devcontainers/containers#_quick-start-open-an-existing-folder-in-a-container
